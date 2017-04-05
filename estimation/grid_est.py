@@ -205,7 +205,7 @@ class GridEst(object):
         bins = 2**8
 
         if mi_method == 'gaussian':
-            entropy_vec = mutual_information.find_gaussian_entropy(
+            entropy_vec = mutual_information.gaussian.find_gaussian_entropy(
                     self.vmag_matrix)
             joint_entropy_matrix = \
             mutual_information.gaussian.find_joint_gaussian_entropy(
@@ -234,7 +234,7 @@ class GridEst(object):
         else:
             print('Please select a valid mutual information method' + 
                   ' gaussian, sk_discrete, MLE or JVHW')
-            pass
+            raise SystemExit
         
         # Find the minimum spanning tree using mutual information as weights.
         self.est_branches, self.graph = mi_alg.find_mst(self.mi_matrix)
@@ -263,19 +263,19 @@ class GridEst(object):
 
         graphviz_layout: string
             Speficied the layout of the graph when draw the graph onto a
-            figure. We can choose from, twopi, gvcolor, wc, ccomps,
+            figure. We can choose from twopi, gvcolor, wc, ccomps,
             tred, sccmap, fdp, circo, neato, acyclic, nop, gvpr, dot, sfdp.
             
         Returns
         ----------
         The graph in self.graph is drawn onto a matlabplot.pyplot figure and
         saved as a PNG file. 
-
         """
 
         # One alternative option is to save the graph as a dot file with:
         # nx.write_dot(self.graph,"grid.dot")
         
+        self.renumber_graph()
         plt.figure()
         nx.draw_graphviz(self.graph, graphviz_layout, with_labels = True,
                          node_color = 'r', node_size = 200, font_size = 10 )
@@ -283,3 +283,26 @@ class GridEst(object):
         plt.savefig(self.graph_name + '.png', format='PNG')
         plt.show()
 
+    def renumber_graph(self):
+        """ Renumber the graph so that the lowest numbered Node is Node 1.
+        
+        This method relables the nodes so that the node numbering begins
+        from 1 rather than from 0.
+        
+        Args:
+        ----------
+        self.graph: networkx graph object
+            This object contains the estimated graph from the estimation
+            algorithm. The labelling here begins from 0.
+        Returns:
+        ----------
+        self.graph: networkx graph object
+            This object contains the estimated graph from the estimation
+            algorithm. The labelling here bgins from 1.
+        """
+        mapping = {}
+        
+        for i in range(0, self.num_buses):
+            mapping[i] = i + 1
+                   
+        self.graph = nx.relabel_nodes(self.graph, mapping)
