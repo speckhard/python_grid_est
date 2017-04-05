@@ -16,13 +16,14 @@ import numpy as np
 
 def find_mst(mi_matrix):
         
-    """ Finds the minimum spanning tree based on mutual information.
+    """ Finds the maximum spanning tree based on mutual information.
         
-    This function finds the minimum spanning tree for the network using
-    the mutual information values between nodes as weights. The function 
-    acts a shell function to call networkx functions to find the min. span 
-    tree.
-        
+    This function finds the maximum spanning tree for the network using
+    the mutual information values between nodes as weights. NetworkX's
+    minimum spanning tree funciton is called on the recriprocal of the
+    mutual information network, therefore generating the maximum
+    spanning tree of the network.
+      
     Args
     -------
     mi_matrix: 2D ndarray, shape (# of nodes, # of nodes)
