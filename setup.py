@@ -1,3 +1,4 @@
+from distutils.core import setup
 setup(
   name = 'grid_top_est',
   packages = ['estimation', 'examples', 'mutual_information', 'transform_data'],
