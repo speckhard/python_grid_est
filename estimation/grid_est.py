@@ -123,6 +123,9 @@ class GridEst(object):
         """
 
         successful_branch_counter = 0.0
+        # Update self.est_branches to be 1 larger since we've renumered the
+        # other nodes.
+        #self.est_branches = self.est_branches + 1
         #flipped_est_branches = np.fliplr(self.est_branches)
         for i in range(0, np.shape(self.est_branches)[0]):
             if ([self.est_branches[i, 0], self.est_branches[i, 1]] \
@@ -154,8 +157,7 @@ class GridEst(object):
         ----------
         self.vmag_matrix: ndarray, shape (# of datapoints, # of nodes)
             This matrix should contain the voltage magnitude
-            data at different timepoints and different nodes. The matrix should
-            be size ((number of nodes) x (number of data points at each node)).
+            data at different timepoints and different nodes.
 
         self.true_branches: 2D ndarray, shape (number of nodes - 1, 2)
             This is a matrix containing the true branches in the system.
@@ -201,8 +203,8 @@ class GridEst(object):
         self.vmag_matrix = transform_data.transform.get_delta(
                 self.vmag_matrix, deriv_step)
         # Find the mutual information
-        bits = 8
-        bins = 2**8
+        bits = 14
+        bins = 2**bits
 
         if mi_method == 'gaussian':
             entropy_vec = mutual_information.gaussian.find_gaussian_entropy(
@@ -272,8 +274,8 @@ class GridEst(object):
         saved as a PNG file. 
         """
 
-        # One alternative option is to save the graph as a dot file with:
-        # nx.write_dot(self.graph,"grid.dot")
+        # One alternative option to this method is to save the graph as a
+        # dot file with: nx.write_dot(self.graph,"grid.dot")
         
         self.renumber_graph()
         plt.figure()
