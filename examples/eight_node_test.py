@@ -22,7 +22,7 @@ matfile = loadmat('Node8_randPF_solar.mat',
                   squeeze_me=True, struct_as_record=False)
 # Load the voltage magnitude matrix.
 vmag_matrix = matfile['v_vec']
-# Remove the feeder Node 1 data from v_vec.
+# Remove the feeder node data from v_vec.
 vmag_matrix = np.delete(vmag_matrix, 0, 1)
 # Load the ture branches of the network.
 mpc_base = matfile['mpc_base']
