@@ -13,13 +13,7 @@ import numpy as np
 import networkx as nx
 import mi_alg
 import matplotlib.pyplot as plt
-#import sys
-#sys.path.append("..") # Adds higher directory to python modules path.
-#from .transform_data import redundant_data, transform
-#from .mutual_information import gaussian, jvhw, discrete
 import transform_data
-
-#import transform_data.redundant_data
 import mutual_information
 
 class GridEst(object):
@@ -35,7 +29,7 @@ class GridEst(object):
     a LASSO method will be implemented. 
     """
     
-    def __init__(self, true_branches, vmag_matrix, graph_name):
+    def __init__(self, true_branches, vmag_matrix, graph_name, num_bits):
 
         """ Initialize grid est class instance.
 
@@ -79,6 +73,16 @@ class GridEst(object):
         
         self.graph_name: str
             The name of the graph which will be estimated. 
+        
+        self.num_bits: int
+            The number of bits to which to discretize the input data when 
+            JVHW or discrete mutual information methods are used for analysis.
+            When the Gaussian method is used for analysis the data is not
+            discretized and this numer is not used. The number of bits of
+            precision specifies the number of equally spaced bins with which
+            to bin the non-discretized data. Ex. num_bits = 2: then 2^2 bins
+            of equal space will be used to bin the data into 2^2 bins and
+            the discretized data will take on values from 0 to (2^2 - 1).
 
         """
         self.true_branches = true_branches -1
@@ -88,6 +92,7 @@ class GridEst(object):
         self.est_branches = np.zeros((self.num_buses - 1, 2))
         self.graph = 'undefined'
         self.graph_name = graph_name
+        self.num_bits = num_bits
 
 
     def find_sdr(self):
@@ -170,6 +175,17 @@ class GridEst(object):
             ouput from estimation. The variable is initialized to 'undefined'
             so that the user knows the estimation has not yet taken place.
             
+        self.num_bits: int
+            The number of bits to which to discretize the input data when 
+            JVHW or discrete mutual information methods are used for analysis.
+            When the Gaussian method is used for analysis the data is not
+            discretized and this numer is not used. The number of bits of
+            precision specifies the number of equally spaced bins with which
+            to bin the non-discretized data. Ex. self.num_bits = 2: then 2^2 
+            bins of equal space will be used to bin the data into 2^2 bins and
+            the discretized data will take on values from 0 to (2^2 - 1).
+            
+            
         mi_method: str
             This variable determines how to calculate the mutual information 
             between nodes. We can select between gaussian, sk_discrete, MLE or
@@ -202,9 +218,10 @@ class GridEst(object):
         deriv_step = 1
         self.vmag_matrix = transform_data.transform.get_delta(
                 self.vmag_matrix, deriv_step)
-        # Find the mutual information
-        bits = 14
-        bins = 2**bits
+        
+        # Find the mutual information. First specify the # of bins to use when
+        # JVHW or discrete MI methods are used.
+        bins = 2**self.num_bits
 
         if mi_method == 'gaussian':
             entropy_vec = mutual_information.gaussian.find_gaussian_entropy(
@@ -216,20 +233,18 @@ class GridEst(object):
                     entropy_vec, joint_entropy_matrix)
 
         elif mi_method == 'sk_discrete':
-            self.vmag_matrix = transform_data.transform.discretize_signal(
-                    self.vmag_matrix, bits)
             self.mi_matrix = mutual_information.discrete.find_sk_discrete_mi(
                     self.vmag_matrix, bins)
         
         elif mi_method == 'MLE':
             self.vmag_matrix = transform_data.transform.discretize_signal(
-                    self.vmag_matrix, bits)
+                    self.vmag_matrix, self.num_bits)
             self.mi_matrix = mutual_information.discrete.find_mle_mi(
                     self.vmag_matrix)
 
         elif mi_method == 'JVHW':
             self.vmag_matrix = transform_data.transform.discretize_signal(
-                    self.vmag_matrix, bits)
+                    self.vmag_matrix, self.num_bits)
             self.mi_matrix = mutual_information.jvhw.find_jvhw_mi(
                     self.vmag_matrix)
             
