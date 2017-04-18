@@ -10,3 +10,4 @@ This package includes exmaples to estimate the grid topology using statistical
 methods. 
 """
 
+from gridtopologyestimation import *
