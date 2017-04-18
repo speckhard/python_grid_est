@@ -32,8 +32,12 @@ true_branches = mpc_base.branch[:,0:2]
 # Remove the feeder branch (1-2) from the true branches array.
 # Subtract by 1, to account for feeder node being deleted.
 true_branches = np.delete(true_branches, 0, 0 ) - 1
+# Set the number of bits when using discrete or JVHW mutual information
+# methods.
+num_bits = 8
 # Create a GridEst objec to prepare to run the algorithm.
-node8_randPF_solar = GridEst(true_branches, vmag_matrix, 'Node8_randPF_solar')
+node8_randPF_solar = GridEst(true_branches, vmag_matrix, 'Node8_randPF_solar',
+                             num_bits)
 # Choose mutual information method, either gaussian, MLE, sk_discrete, or JVHW.
 mi_method = 'gaussian'
 node8_randPF_solar.run_mi_alg(mi_method)
