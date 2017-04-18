@@ -1,0 +1,8 @@
+#JVHW and MLE Mutual Info required .mat file
+include gridtopologyestimation/poly_coeff_entro.mat
+
+#example files
+include gridtopologyestimation/Node8_randPF_solar.mat
+
+#Misc
+include LICENSE.txt
