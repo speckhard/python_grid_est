@@ -3,3 +3,22 @@ include discretetopology/mutual_information/poly_coeff_entro.mat
 
 #Misc
 include LICENSE.txt
+setup.cfg
+setup.py
+
+# Estimation Files
+include discretetopology/estimation/__init__.py
+include discretetopology/estimation/grid_est.py
+include discretetopology/estimation/mi_alg.py
+# MI Files
+include discretetopology/mutual_information/__init__.py
+include discretetopology/mutual_information/discrete.py
+include discretetopology/mutual_information/est_entro.py
+include discretetopology/mutual_information/est_MI.py
+include discretetopology/mutual_information/gaussian.py
+include discretetopology/mutual_information/jvhw.py
+# Transform Data
+include discretetopology/transform_data/__init__.py
+include discretetopology/transform_data/redundant_data.py
+include discretetopology/transform_data/transform.py
+
