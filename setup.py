@@ -14,8 +14,6 @@ if __name__ == "__main__":
         packages=['myPackage', 'discretetopology.estimation',
                   'discretetopology.mutual_infromation',
                   'discretetopology.tranform_data']
-        name = 'discretetopology',
-        packages = ['discretetopology'],
         version = '0.9',
         description = 'Library to estimate topology of electrical grid using voltage sensor data',
         author = 'Daniel Speckhard',
@@ -25,4 +23,4 @@ if __name__ == "__main__":
         keywords = ['information-theory', 'smart-grid', 'estimation', 'toplogy', 'mutual-information'], 
         classifiers = [],
         zip_safe = False,
-    )
+      )
