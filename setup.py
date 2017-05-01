@@ -11,7 +11,7 @@ if __name__ == "__main__":
             'discretetopology.estimation': pathMySubPackage1,
             'discretetopology.mutual_infromation': pathMySubPackage2,
             'discretetopology.tranform_data': pathMySubPackage3},
-        packages=['myPackage', 'discretetopology.estimation',
+        packages=['discretetopology', 'discretetopology.estimation',
                   'discretetopology.mutual_infromation',
                   'discretetopology.tranform_data'],
         version = '0.9',
