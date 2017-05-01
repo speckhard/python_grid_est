@@ -13,7 +13,7 @@ if __name__ == "__main__":
             'discretetopology.tranform_data': pathMySubPackage3},
         packages=['myPackage', 'discretetopology.estimation',
                   'discretetopology.mutual_infromation',
-                  'discretetopology.tranform_data']
+                  'discretetopology.tranform_data'],
         version = '0.9',
         description = 'Library to estimate topology of electrical grid using voltage sensor data',
         author = 'Daniel Speckhard',
