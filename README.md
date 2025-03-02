@@ -12,7 +12,7 @@ Please use pip install the library.
 
 ## Juptyer notebook
 
-Please see the juptyer notebook (examples/Grid_Topology_Estimation.ipynb) to get a better how this library can be used in practice:
+Please see the juptyer notebook (examples/Grid_Topology_Estimation.ipynb) to get a better how this library can be used in practice. In the notebook an 8 node IEEE example is shown as well as an example main file.
 
 
 
