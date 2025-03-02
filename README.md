@@ -6,10 +6,7 @@ Specifically, they call the Chow-Liu algorithm to estimate the power grid topolo
 
 ## Juptyer notebook
 
-Please see the juptyer notebook to get a better how this library can be used in practice:
-
-examples/Grid_Topology_Estimation.ipynb
-
+Please see the juptyer notebook (examples/Grid_Topology_Estimation.ipynb) to get a better how this library can be used in practice:
 
 
 
